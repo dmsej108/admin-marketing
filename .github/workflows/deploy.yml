@@ -40,6 +40,7 @@ jobs:
       - name: Build
         env:
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_MF_PUBLIC_ORIGIN: https://${{ github.repository_owner }}.github.io
         run: pnpm build
 
       - name: Setup SPA fallback

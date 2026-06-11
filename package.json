@@ -1,11 +1,13 @@
 {
   "name": "admin-marketing",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-mf-manifest.mjs --dev",
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/generate-mf-manifest.mjs",
     "lint": "eslint .",
     "preview": "vite preview --port 5174"
   },
