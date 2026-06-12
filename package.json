@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/generate-mf-manifest.mjs --dev",
+    "predev": "node --env-file=.env.development scripts/generate-mf-manifest.mjs --dev",
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "postbuild": "node scripts/generate-mf-manifest.mjs",
+    "postbuild": "node --env-file=.env.production scripts/generate-mf-manifest.mjs",
     "lint": "eslint .",
     "preview": "vite preview --port 5174"
   },

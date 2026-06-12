@@ -9,8 +9,14 @@ const isDev = process.argv.includes('--dev')
 const pkg = JSON.parse(readFileSync(join(rootDir, 'package.json'), 'utf8'))
 const version = pkg.version
 
-const origin = (process.env.VITE_MF_PUBLIC_ORIGIN ?? 'http://localhost:5174').replace(/\/$/, '')
+const origin = process.env.VITE_MF_PUBLIC_ORIGIN?.replace(/\/$/, '')
 const basePath = normalizeBasePath(process.env.VITE_BASE_PATH, pkg.name)
+
+if (!origin) {
+  throw new Error(
+    'Missing VITE_MF_PUBLIC_ORIGIN. Set it in .env.development, .env.production, or CI env. See .env.example',
+  )
+}
 
 const remoteEntry = isDev
   ? joinUrl(origin, basePath, 'assets/remoteEntry.js')
