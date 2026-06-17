@@ -1,12 +1,11 @@
 import { memo, useCallback, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import type { ColDef, GridReadyEvent, RowClickedEvent } from 'ag-grid-community'
 import { SButton, SPagination, SSelect } from '@dmsej108/design-system'
 import Searchbox from '@/components/ui/Searchbox'
 import { AgGridReact } from '@/lib/config/ag-grid'
 import type { SComponentBaseProps } from '@/types/base'
 import { MOCK_EVENT_LIST } from '@/data/event-data'
-import '@/styles/admin.css'
 
 export interface SEventListPageProps extends SComponentBaseProps {}
 
@@ -19,7 +18,7 @@ const listCountOptions = [
 
 const EventListPage = ({ className }: SEventListPageProps) => {
   // region [Hooks]
-  const navigate = useNavigate()
+  const router = useRouter()
   const [currentPage, setCurrentPage] = useState(1)
   const [colDefs] = useState<ColDef[]>([
     { field: 'eventId', headerName: '이벤트ID', width: 100, cellClass: 'centered' },
@@ -53,10 +52,10 @@ const EventListPage = ({ className }: SEventListPageProps) => {
     (event: RowClickedEvent) => {
       const eventId = event.data?.eventId
       if (eventId) {
-        navigate(`/marketing/event/detail/${eventId}`)
+        router.push(`/marketing/event/detail/${eventId}`)
       }
     },
-    [navigate],
+    [router],
   )
 
   const onChangedPage = useCallback((pageNo: number) => {
@@ -64,8 +63,8 @@ const EventListPage = ({ className }: SEventListPageProps) => {
   }, [])
 
   const onRegistClick = useCallback(() => {
-    navigate('/marketing/event/regist')
-  }, [navigate])
+    router.push('/marketing/event/regist')
+  }, [router])
   // endregion
 
   return (

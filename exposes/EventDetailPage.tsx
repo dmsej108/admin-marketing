@@ -1,11 +1,10 @@
 import { memo, useCallback, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { SButton, STab } from '@dmsej108/design-system'
 import EventAdminDetail from '@/components/event/detail/EventAdminDetail'
 import EventCustomerPreview from '@/components/event/detail/EventCustomerPreview'
 import { findEventById } from '@/data/event-data'
 import type { SComponentBaseProps } from '@/types/base'
-import '@/styles/admin.css'
 
 export interface SEventDetailPageProps extends SComponentBaseProps {}
 
@@ -16,8 +15,8 @@ const EVENT_DETAIL_TABS = [
 
 const EventDetailPage = (_props: SEventDetailPageProps) => {
   // region [Hooks]
-  const navigate = useNavigate()
-  const { eventId = '' } = useParams<{ eventId: string }>()
+  const router = useRouter()
+  const eventId = (router.query.eventId as string) ?? ''
   const eventDetail = findEventById(eventId)
   const [activeTab, setActiveTab] = useState<string>(EVENT_DETAIL_TABS[0].value)
   // endregion
@@ -27,17 +26,17 @@ const EventDetailPage = (_props: SEventDetailPageProps) => {
     if (window.confirm('이벤트를 삭제하시겠습니까?')) {
       console.log('delete', eventId)
       alert('삭제 (목업)')
-      navigate('/marketing/event')
+      router.push('/marketing/event')
     }
-  }, [eventId, navigate])
+  }, [eventId, router])
 
   const onEdit = useCallback(() => {
     alert('수정 페이지는 추후 구현 예정입니다. (목업)')
   }, [])
 
   const onListClick = useCallback(() => {
-    navigate('/marketing/event')
-  }, [navigate])
+    router.push('/marketing/event')
+  }, [router])
   // endregion
 
   if (!eventDetail) {

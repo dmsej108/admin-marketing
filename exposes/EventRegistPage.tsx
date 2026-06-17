@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/router'
 import { SButton } from '@dmsej108/design-system'
 import FormTitle from '@/components/ui/FormTitle'
 import DefaultForm from '@/components/event/regist/DefaultForm'
@@ -11,7 +11,6 @@ import BenefitForm from '@/components/event/regist/BenefitForm'
 import { EVENT_FORM_DEFAULT_VALUES } from '@/data/event-data'
 import { rules } from '@/lib/validate'
 import type { SComponentBaseProps } from '@/types/base'
-import '@/styles/admin.css'
 
 export interface SEventRegistPageProps extends SComponentBaseProps {}
 
@@ -50,7 +49,7 @@ type FormValues = yup.InferType<typeof schema>
 
 const EventRegistPage = (_props: SEventRegistPageProps) => {
   // region [Hooks]
-  const navigate = useNavigate()
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -82,8 +81,8 @@ const EventRegistPage = (_props: SEventRegistPageProps) => {
   }, [])
 
   const onCancelClick = useCallback(() => {
-    navigate(-1)
-  }, [navigate])
+    router.back()
+  }, [router])
   // endregion
 
   return (
